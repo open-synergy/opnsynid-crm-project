@@ -1,0 +1,2 @@
+oca-timesheet https://github.com/OCA/timesheet 8.0
+oca-project https://github.com/OCA/project 8.0
