@@ -24,14 +24,28 @@ class CrmLead(models.Model):
             record.task_count_open = len(
                 record.task_ids.filtered(lambda r: r.stage_id.state == "open")
             )
+            record.task_count_draft = len(
+                record.task_ids.filtered(lambda r: r.stage_id.state == "draft")
+            )
+            record.task_count_active = record.task_count_open + record.task_count_draft
 
     task_ids = fields.One2many(
         string="Tasks",
         comodel_name="project.task",
         inverse_name="lead_id",
     )
+    task_count_active = fields.Integer(
+        string="Num. of All Tasks",
+        compute="_compute_task_count",
+        store=True,
+    )
     task_count_open = fields.Integer(
         string="Num. of Open Tasks",
+        compute="_compute_task_count",
+        store=True,
+    )
+    task_count_draft = fields.Integer(
+        string="Num. of Draft Tasks",
         compute="_compute_task_count",
         store=True,
     )
